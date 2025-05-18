@@ -20,7 +20,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 
-import Logo from '@/assets/logo.png'
+import Logo from '@/assets/logo.svg'
 
 // Menu items.
 const items = [
@@ -59,8 +59,8 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader className='px-4 py-6'>
-        <img src={Logo} alt="logo" className='self-start' />
+      <SidebarHeader className="px-4 py-6">
+        <img src={Logo} alt="logo" className="self-start max-h-8 w-auto" />
       </SidebarHeader>
 
       <SidebarContent>
