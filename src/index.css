@@ -43,7 +43,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #F2F4F5;
+  --background: #fff;
   --foreground: oklch(0.129 0.042 264.695);
   --card: #F2F4F5;
   --card-foreground: oklch(0.129 0.042 264.695);
@@ -53,7 +53,7 @@
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
+  --muted: #F4F4F5;
   --muted-foreground: oklch(0.554 0.046 257.417);
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
@@ -108,6 +108,19 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+html, body, #root {
+  height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 114.286%;
+}
+
+button, a {
+  font-weight: 600;
 }
 
 @layer base {

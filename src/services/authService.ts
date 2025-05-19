@@ -1,5 +1,13 @@
 import { supabase } from '@/lib/supabaseClient'
 
+export const verifyEmail = async (email: string) => {
+  return await supabase.auth.verifyOtp({
+    email: email,
+    token: '123456',
+    type: 'email',
+  })
+}
+
 export const signUp = async (email: string, password: string) => {
   return await supabase.auth.signUp({ email, password })
 }
