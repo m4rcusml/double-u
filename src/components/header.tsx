@@ -16,7 +16,7 @@ export function Header({ useDarkMode = false }: Props) {
   return (
     <header className={`bg-muted w-full p-4 flex items-center gap-3 ${useDarkMode ? 'dark' : ''}`}>
       {isLogged ? (
-        <Button size='icon' variant='ghost' className='cursor-pointer' onClick={toggleSidebar}>
+        <Button size='icon' variant='ghost' className='cursor-pointer hover:bg-background' onClick={toggleSidebar}>
           <Menu color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
         </Button>
       ) : (
@@ -27,7 +27,7 @@ export function Header({ useDarkMode = false }: Props) {
 
       <div className="flex-1" />
 
-      <Button size='icon' variant='ghost' className='cursor-pointer'>
+      <Button size='icon' variant='ghost' className='cursor-pointer hover:bg-background'>
         {useDarkMode ? (
           <Sun color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
         ) : (
@@ -35,7 +35,7 @@ export function Header({ useDarkMode = false }: Props) {
         )}
       </Button>
 
-      <Button size='icon' variant='ghost' className='cursor-pointer'>
+      <Button size='icon' variant='ghost' className='cursor-pointer hover:bg-background'>
         <Bell color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
       </Button>
 
