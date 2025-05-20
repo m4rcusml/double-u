@@ -9,39 +9,54 @@ type Props = {
 }
 
 export function Header({ useDarkMode = false }: Props) {
-  const isLogged = !useLocation().pathname.includes('not-logged')
+  const location = useLocation()
+  const isLogged = !location.pathname.includes('not-logged')
   const navigate = useNavigate()
   const { toggleSidebar } = useSidebar()
 
+  const iconColorClass = useDarkMode ? 'text-white' : 'text-black'
+  const logoStyle = useDarkMode ? '' : 'invert'
+  
+  // Apply glassmorphism style when user is not logged in
+  const headerClass = isLogged 
+    ? `bg-muted w-full px-4 py-3 flex items-center justify-between shadow-sm ${useDarkMode ? 'dark' : ''}` 
+    : `w-full px-4 py-3 flex items-center justify-between ${useDarkMode ? 'dark' : ''} backdrop-blur-sm bg-background/70 border-b border-border/40`
+
   return (
-    <header className={`bg-muted w-full p-4 flex items-center gap-3 ${useDarkMode ? 'dark' : ''}`}>
-      {isLogged ? (
-        <Button size='icon' variant='ghost' className='cursor-pointer' onClick={toggleSidebar}>
-          <Menu color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
-        </Button>
-      ) : (
-        <Button variant='outline' className='cursor-pointer text-foreground' onClick={() => navigate('/auth')}>
-          ENTRAR
-        </Button>
-      )}
-
-      <div className="flex-1" />
-
-      <Button size='icon' variant='ghost' className='cursor-pointer'>
-        {useDarkMode ? (
-          <Sun color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
+    <header className={headerClass}>
+      <div className="flex items-center gap-3">
+        {isLogged ? (
+          <Button size="icon" variant="ghost" onClick={toggleSidebar}>
+            <Menu className={`w-6 h-6 ${iconColorClass}`} />
+          </Button>
         ) : (
-          <Moon color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
+          <Button variant="outline" onClick={() => navigate('/auth')} className="text-foreground">
+            ENTRAR
+          </Button>
         )}
-      </Button>
+      </div>
 
-      <Button size='icon' variant='ghost' className='cursor-pointer'>
-        <Bell color={useDarkMode ? 'white' : 'black'} style={{ width: 28, height: 28 }} />
-      </Button>
+      <div className="flex items-center gap-3">
+        <Button size="icon" variant="ghost">
+          {useDarkMode ? (
+            <Sun className={`w-6 h-6 ${iconColorClass}`} />
+          ) : (
+            <Moon className={`w-6 h-6 ${iconColorClass}`} />
+          )}
+        </Button>
 
-      <div className='bg-border self-stretch w-0.25 min-h-10' />
+        <Button size="icon" variant="ghost">
+          <Bell className={`w-6 h-6 ${iconColorClass}`} />
+        </Button>
 
-      <img src={Logo} alt='logo' className={`${useDarkMode ? '' : 'invert'} w-10`} />
+        <div className="hidden sm:block h-6 border-l border-border mx-2" />
+
+        <img
+          src={Logo}
+          alt="logo"
+          className={`w-10 ${logoStyle}`}
+        />
+      </div>
     </header>
   )
 }

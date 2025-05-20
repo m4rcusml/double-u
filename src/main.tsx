@@ -10,6 +10,7 @@ import { FirstAccessForm } from './components/first-access-form'
 import { LoginForm } from './components/login-form'
 import { Simulations } from './pages/simulations'
 import { NotLoggedLayout } from './layouts/not-logged-layout'
+import Landing from './pages/landing'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/not-logged' element={<NotLoggedLayout />}>
           <Route index element={<h1>landing page</h1>} />
           <Route path='simulations' element={<Simulations />} />
+          <Route path='landing' element={<Landing />} />
         </Route>
         <Route path='/auth' element={<AuthLayout />}>
           <Route index element={<LoginForm />} />
