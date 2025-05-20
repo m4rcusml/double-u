@@ -39,8 +39,8 @@ export function Simulations() {
         <Input placeholder='Valor venal dos imóveis (R$)' type='number' />
         
         <div className='flex gap-2.5'>
-          <Button className='bg-accent'>Simular</Button>
-          <Button variant='outline' className='flex-1 border-accent text-accent-foreground'>Gerar relatório PDF</Button>
+          <Button className='bg-accent flex-1/3'>Simular</Button>
+          <Button variant='outline' className='flex-2/3 border-accent text-accent-foreground hover:bg-accent hover:text-white'>Gerar relatório PDF</Button>
         </div>
       </Card>
 
