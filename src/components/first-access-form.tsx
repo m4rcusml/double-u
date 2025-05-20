@@ -41,7 +41,7 @@ export function FirstAccessForm() {
         <Button onClick={handleSubmit(submit)}>Continuar</Button>
         <Button variant='outline'>Continuar com Google</Button>
 
-        <div className='flex self-center items-center justify-center gap-1 text-sm'>
+        <div className='flex self-center items-center justify-center gap-1 text-xs'>
           <span className='text-muted-foreground'>Já possui uma conta?</span>
           <Link to='/auth/login'>Entrar</Link>
         </div>

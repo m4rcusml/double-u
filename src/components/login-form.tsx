@@ -21,7 +21,7 @@ export function LoginForm() {
       <CardFooter className='flex flex-col items-stretch gap-1'>
         <Button>Entrar</Button>
         <Button variant='outline'>Entrar com Google</Button>
-        <div className='flex self-center items-center justify-center gap-1 text-sm'>
+        <div className='flex self-center items-center justify-center gap-1 text-xs'>
           <span className='text-muted-foreground'>Primeira acesso à plataforma?</span>
           <Link to='/auth/first-access'>Criar senha</Link>
         </div>
