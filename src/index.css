@@ -119,11 +119,6 @@ html {
   font-size: 114.286%;
 }
 
-main > section {
-  margin: auto;
-  max-width: 1440px;
-}
-
 button, a {
   font-weight: 600;
 }
