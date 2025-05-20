@@ -11,9 +11,7 @@ export function RootLayout() {
       <main className='h-full w-full flex flex-col'>
         <Header />
 
-        <section className='flex-1'>
-          <Outlet />
-        </section>
+        <Outlet />
       </main>
     </SidebarProvider>
   )
