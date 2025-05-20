@@ -5,7 +5,8 @@ import {
   UsersRound,
   MessageCircleMore,
   Settings,
-  Moon,
+  Landmark,
+  SidebarClose,
 } from 'lucide-react'
 
 import {
@@ -18,6 +19,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar'
 
 import Logo from '@/assets/logo.svg'
@@ -45,6 +47,11 @@ const items = [
     icon: FileText,
   },
   {
+    title: 'Imóveis',
+    url: 'properties',
+    icon: Landmark,
+  },
+  {
     title: 'Falar com consultor',
     url: 'consultor',
     icon: MessageCircleMore,
@@ -57,9 +64,11 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const { toggleSidebar } = useSidebar()
+  
   return (
     <Sidebar>
-      <SidebarHeader className="px-4 py-6">
+      <SidebarHeader className="px-6 py-8">
         <img src={Logo} alt="logo" className="self-start max-h-8 w-auto" />
       </SidebarHeader>
 
@@ -69,10 +78,10 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton className='transition-colors px-4 py-6' asChild>
                     <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
+                      <item.icon style={{ width: 28, height: 28 }} />
+                      <span className="font-medium">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -82,21 +91,10 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <div>
-                    <Moon fill="currentColor" />
-                    <span>Modo escuro</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarFooter className='flex flex-row-reverse'>
+        <SidebarMenuButton className='w-min transition-colors px-4 py-6' onClick={toggleSidebar}>
+          <SidebarClose style={{ width: 28, height: 28 }} />
+        </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>
   )

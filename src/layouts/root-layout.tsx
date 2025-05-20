@@ -1,14 +1,16 @@
 import { Outlet } from 'react-router'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { AppSidebar } from '../components/app-sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { AppSidebar } from '@/components/app-sidebar'
+import { Header } from '@/components/header'
 
 export function RootLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
 
-      <main className='h-full flex flex-row'>
-        <SidebarTrigger />
+      <main className='h-full w-full flex flex-col'>
+        <Header />
+
         <section className='flex-1'>
           <Outlet />
         </section>
