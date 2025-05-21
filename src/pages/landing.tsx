@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import Loader from "@/components/landing/loader";
 
-// Lazy-loaded components for better performance
+// lazy-loaded components for better performance
 const HeroSection = lazy(() => import("@/components/landing/hero-section"));
 const BenefitsSection = lazy(() => import("@/components/landing/benefits-section"));
 const TestimonialSection = lazy(() => import("@/components/landing/testimonial-section"));

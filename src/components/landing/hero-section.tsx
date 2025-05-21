@@ -50,7 +50,7 @@ const HeroSection = () => {
             
             <Button 
               variant="outline"
-              className="w-full sm:w-auto bg-white border-white/30 text-gray-900 hover:bg-white/60 py-3 px-8 text-base"
+              className="w-full sm:w-auto bg-white border-white/30 text-gray-900 hover:bg-white/10 py-3 px-8 text-base"
               onClick={() => window.open("#saiba-mais", "_self")}
             >
               Saiba mais
