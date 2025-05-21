@@ -1,24 +1,26 @@
-import { useEffect } from 'react';
-import { FileTextIcon, BarChart3Icon, TrendingUpIcon, ShieldIcon } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useSimulationStore } from '@/stores/simulation-store';
+import { useEffect } from 'react'
+import { FileTextIcon, BarChart3Icon, TrendingUpIcon, ShieldIcon } from 'lucide-react'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { useSimulationStore } from '@/stores/simulation-store'
+import { useLocation } from 'react-router'
 
 export function Simulations() {
-  const { 
-    inputs, 
-    results, 
-    isLoading, 
-    hasSimulated, 
+  const {
+    inputs,
+    results,
+    isLoading,
+    hasSimulated,
     errors,
-    setInput, 
-    runSimulation, 
-    resetSimulation 
-  } = useSimulationStore();
+    setInput,
+    runSimulation,
+    resetSimulation
+  } = useSimulationStore()
+  const { pathname } = useLocation()
 
   // Dados para o gráfico de comparação
   const comparisonData = results ? [
@@ -37,41 +39,27 @@ export function Simulations() {
       semHolding: results.cenarioAtual.riscos,
       comHolding: results.cenarioHolding.riscos,
     },
-  ] : [];
+  ] : []
 
   // Opções para o campo de perfil
   const perfilOptions = [
     { value: 'empresario', label: 'Empresário' },
     { value: 'sociedade', label: 'Sociedade' },
     { value: 'mei', label: 'MEI' }
-  ];
+  ]
 
   // Efeito para scroll automático para os resultados após simulação
   useEffect(() => {
     if (hasSimulated && results) {
-      const resultsElement = document.getElementById('results-section');
+      const resultsElement = document.getElementById('results-section')
       if (resultsElement) {
-        resultsElement.scrollIntoView({ behavior: 'smooth' });
+        resultsElement.scrollIntoView({ behavior: 'smooth' })
       }
     }
-  }, [hasSimulated, results]);
+  }, [hasSimulated, results])
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <header className="w-full bg-black text-white px-6 py-4 flex justify-between items-center">
-        <button className="border border-white rounded-md px-4 py-2 text-sm font-medium hover:bg-white/10 transition-colors">
-          ENTRAR
-        </button>
-        <div className="flex items-center gap-4">
-          <button className="text-white hover:text-gray-300 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-moon">
-              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-            </svg>
-          </button>
-          <div className="text-2xl font-bold">W1</div>
-        </div>
-      </header>
-
+    <div className={`flex flex-col min-h-screen bg-background text-foreground ${pathname.includes('not-logged') ? 'pt-16' : ''}`}>
       <main className="flex-grow">
         {/* Seção de Título */}
         <section className="w-full max-w-4xl mx-auto px-6 py-8">
@@ -86,7 +74,7 @@ export function Simulations() {
           <Card className="p-6 shadow-md rounded-lg">
             <h2 className="text-2xl font-semibold text-foreground mb-2">Suas informações</h2>
             <p className="text-muted-foreground mb-6">Preencha os dados abaixo para simular os benefícios de uma holding</p>
-            
+
             <div className="space-y-6">
               <div className="flex flex-col gap-1.5">
                 <Label className="text-sm font-medium text-muted-foreground">Patrimônio total (R$)</Label>
@@ -120,7 +108,7 @@ export function Simulations() {
                     <p className="text-xs text-red-500 mt-1">{errors.empresas}</p>
                   )}
                 </div>
-                
+
                 <div className="flex flex-col gap-1.5">
                   <Label className="text-sm font-medium text-muted-foreground">Tipo de perfil</Label>
                   <Select value={inputs.perfil} onValueChange={(value) => setInput('perfil', value)}>
@@ -204,7 +192,7 @@ export function Simulations() {
                 )}
               </div>
 
-                <div className="flex flex-col xs:flex-row gap-4 pt-2">
+              <div className="flex flex-col xs:flex-row gap-4 pt-2">
                 <Button
                   className="w-full py-2 bg-accent text-white hover:bg-accent/90 flex items-center justify-center"
                   onClick={runSimulation}
@@ -215,7 +203,7 @@ export function Simulations() {
                 <Button
                   variant="outline"
                   className="w-full py-2 border-foreground text-foreground hover:bg-accent hover:text-white flex items-center justify-center"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   <FileTextIcon className="h-5 w-5 mr-2" />
                   GERAR RELATÓRIO PDF
@@ -249,19 +237,19 @@ export function Simulations() {
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Line 
-                        type="monotone" 
-                        dataKey="semHolding" 
-                        name="Sem Holding" 
-                        stroke="#ef4444" 
-                        activeDot={{ r: 8 }} 
+                      <Line
+                        type="monotone"
+                        dataKey="semHolding"
+                        name="Sem Holding"
+                        stroke="#ef4444"
+                        activeDot={{ r: 8 }}
                         strokeWidth={2}
                       />
-                      <Line 
-                        type="monotone" 
-                        dataKey="comHolding" 
-                        name="Com Holding" 
-                        stroke="#10b981" 
+                      <Line
+                        type="monotone"
+                        dataKey="comHolding"
+                        name="Com Holding"
+                        stroke="#10b981"
                         strokeWidth={2}
                       />
                     </LineChart>
@@ -275,7 +263,7 @@ export function Simulations() {
               <Card className="p-6 bg-background shadow-md rounded-lg">
                 <h2 className="text-2xl font-semibold text-foreground mb-2">Insights</h2>
                 <p className="text-muted-foreground mb-6">Análises inteligentes baseadas nos dados da sua simulação para ajudar você a tomar as melhores decisões</p>
-                
+
                 <div className="grid grid-cols-1 gap-4">
                   <div className="flex gap-4 p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
                     <div className="flex-shrink-0 text-accent">
@@ -288,7 +276,7 @@ export function Simulations() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex gap-4 p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
                     <div className="flex-shrink-0 text-accent">
                       <ShieldIcon className="h-6 w-6" />
@@ -300,7 +288,7 @@ export function Simulations() {
                       </p>
                     </div>
                   </div>
-                  
+
                   {inputs.herdeiros && parseInt(inputs.herdeiros) > 0 && (
                     <div className="flex gap-4 p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
                       <div className="flex-shrink-0 text-accent">
@@ -314,7 +302,7 @@ export function Simulations() {
                       </div>
                     </div>
                   )}
-                  
+
                   {inputs.empresas && parseInt(inputs.empresas) > 1 && (
                     <div className="flex gap-4 p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
                       <div className="flex-shrink-0 text-accent">
@@ -337,14 +325,14 @@ export function Simulations() {
               <Card className="p-6 bg-background shadow-md rounded-lg">
                 <h2 className="text-2xl font-semibold text-foreground mb-2">Indicadores Detalhados</h2>
                 <p className="text-muted-foreground mb-6">Métricas financeiras detalhadas que demonstram o impacto da holding em seu patrimônio</p>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                   <Card className="p-4 h-full">
                     <h3 className="text-sm font-medium text-muted-foreground mb-1">Economia Fiscal</h3>
                     <div className="flex items-baseline">
                       <span className="text-2xl font-bold">{results.economiaFiscal.toFixed(1)}%</span>
                     </div>
-                    
+
                     <div className="flex items-center mt-2">
                       <div className="flex items-center text-emerald-500">
                         <TrendingUpIcon className="h-4 w-4 mr-1" />
@@ -352,13 +340,13 @@ export function Simulations() {
                       </div>
                     </div>
                   </Card>
-                  
+
                   <Card className="p-4 h-full">
                     <h3 className="text-sm font-medium text-muted-foreground mb-1">Proteção Patrimonial</h3>
                     <div className="flex items-baseline">
                       <span className="text-2xl font-bold">{results.protecaoPatrimonial.toFixed(1)}%</span>
                     </div>
-                    
+
                     <div className="flex items-center mt-2">
                       <div className="flex items-center text-emerald-500">
                         <TrendingUpIcon className="h-4 w-4 mr-1" />
@@ -366,13 +354,13 @@ export function Simulations() {
                       </div>
                     </div>
                   </Card>
-                  
+
                   <Card className="p-4 h-full">
                     <h3 className="text-sm font-medium text-muted-foreground mb-1">Eficiência Sucessória</h3>
                     <div className="flex items-baseline">
                       <span className="text-2xl font-bold">{results.sucessaoEficiente.toFixed(1)}%</span>
                     </div>
-                    
+
                     <div className="flex items-center mt-2">
                       <div className="flex items-center text-emerald-500">
                         <TrendingUpIcon className="h-4 w-4 mr-1" />
@@ -380,13 +368,13 @@ export function Simulations() {
                       </div>
                     </div>
                   </Card>
-                  
+
                   <Card className="p-4 h-full">
                     <h3 className="text-sm font-medium text-muted-foreground mb-1">Governança Familiar</h3>
                     <div className="flex items-baseline">
                       <span className="text-2xl font-bold">{results.governancaFamiliar.toFixed(1)}%</span>
                     </div>
-                    
+
                     <div className="flex items-center mt-2">
                       <div className="flex items-center text-emerald-500">
                         <TrendingUpIcon className="h-4 w-4 mr-1" />
@@ -395,40 +383,40 @@ export function Simulations() {
                     </div>
                   </Card>
                 </div>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Card className="p-6 shadow-sm">
                     <h3 className="text-lg font-medium mb-4">Cenário Atual</h3>
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Custo Total:</span>
-                        <span className="font-medium">R$ {results.cenarioAtual.custoTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <span className="font-medium">R$ {results.cenarioAtual.custoTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Impostos:</span>
-                        <span className="font-medium">R$ {results.cenarioAtual.impostos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <span className="font-medium">R$ {results.cenarioAtual.impostos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Riscos Estimados:</span>
-                        <span className="font-medium">R$ {results.cenarioAtual.riscos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <span className="font-medium">R$ {results.cenarioAtual.riscos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                       </div>
                     </div>
                   </Card>
-                  
+
                   <Card className="p-6 shadow-sm border-emerald-200 bg-emerald-50/30">
                     <h3 className="text-lg font-medium mb-4">Cenário com Holding</h3>
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Custo Total:</span>
-                        <span className="font-medium text-emerald-600">R$ {results.cenarioHolding.custoTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <span className="font-medium text-emerald-600">R$ {results.cenarioHolding.custoTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Impostos:</span>
-                        <span className="font-medium text-emerald-600">R$ {results.cenarioHolding.impostos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <span className="font-medium text-emerald-600">R$ {results.cenarioHolding.impostos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Riscos Estimados:</span>
-                        <span className="font-medium text-emerald-600">R$ {results.cenarioHolding.riscos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <span className="font-medium text-emerald-600">R$ {results.cenarioHolding.riscos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                       </div>
                     </div>
                   </Card>
@@ -439,16 +427,16 @@ export function Simulations() {
             {/* Botões de Ação */}
             <section className="w-full max-w-4xl mx-auto px-6 py-8">
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
+                <Button
                   className="w-full py-2 bg-accent text-white hover:bg-accent/90"
                   onClick={resetSimulation}
                 >
                   Fazer outra simulação
                 </Button>
-                <Button 
+                <Button
                   variant="outline"
                   className="w-full py-2 border-accent text-accent-foreground hover:bg-accent hover:text-white flex items-center justify-center"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   <FileTextIcon className="h-5 w-5 mr-2" />
                   Gerar relatório PDF
@@ -459,5 +447,5 @@ export function Simulations() {
         )}
       </main>
     </div>
-  );
+  )
 }

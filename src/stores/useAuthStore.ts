@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabaseClient'
 
@@ -19,7 +19,12 @@ export const useAuthStore = create<AuthStore>()(
       setSession: (session) => set({ session }),
     }),
     {
-      name: 'auth-storage', // nome único para o storage
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage), // explicitly use localStorage
+      partialize: (state) => ({
+        user: state.user,
+        session: state.session
+      }), // only persist these fields
     }
   )
 )
