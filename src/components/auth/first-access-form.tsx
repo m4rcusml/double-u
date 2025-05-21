@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { supabase } from '@/lib/supabaseClient'
+import { toast } from 'sonner'
 
 type FormSchema = z.infer<typeof schema>
 
@@ -27,17 +28,16 @@ export function FirstAccessForm() {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          shouldCreateUser: false,
-          emailRedirectTo: undefined, // Prevents magic link, only sends OTP code
+          shouldCreateUser: false
         }
       })
       if (error) {
-        alert(error.message)
+        toast(error.message)
         return
       }
       navigate('verification', { state: { email } })
     } catch (err: any) {
-      alert('Erro ao enviar o código de verificação.')
+      toast('Erro ao enviar o código de verificação.')
     }
   }
 

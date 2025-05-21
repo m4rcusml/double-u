@@ -9,69 +9,57 @@ import { useAuthStore } from '@/stores/useAuthStore'
 import { supabase } from '@/lib/supabaseClient'
 import { toast } from 'sonner'
 
-const loginSchema = z.object({
-  email: z.string().email('Email inválido'),
+const createPasswordSchema = z.object({
   password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
+  confirmPassword: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'As senhas devem ser iguais',
+  path: ['confirmPassword'],
 })
 
-type LoginFormValues = z.infer<typeof loginSchema>
+type LoginFormValues = z.infer<typeof createPasswordSchema>
 
-export function LoginForm() {
+export function CreatePasswordForm() {
   const navigate = useNavigate()
-  const { setUser, setSession } = useAuthStore()
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(createPasswordSchema),
   })
 
   async function onSubmit(data: LoginFormValues) {
-    try {
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      })
-
-      if (error) {
-        console.error('Login failed:', error.message)
-        toast(error.message)
-        return
-      }
-
-      setUser(authData.user)
-      setSession(authData.session)
-      navigate('/dashboard')
-    } catch (error: any) {
-      toast(error.message)
-      console.error('Login failed:', error.message)
+    const user = useAuthStore.getState().user
+    if (!user) {
+      toast('Usuário não autenticado.')
+      return
     }
+
+    const { error } = await supabase.auth.updateUser({
+      password: data.password,
+    })
+
+    if (error) {
+      toast(error.message)
+      return
+    }
+
+    toast('Senha criada com sucesso!')
+    navigate('/auth/login')
   }
 
   return (
     <Card className='bg-background'>
       <CardHeader>
-        <CardTitle>Bem vindo de volta</CardTitle>
+        <CardTitle>Crie uma senha</CardTitle>
         <CardDescription>
-          Acesse sua conta para continuar
+          Crie uma senha para acessar sua conta
         </CardDescription>
       </CardHeader>
 
       <form className='space-y-3' onSubmit={handleSubmit(onSubmit)}>
         <CardContent className='space-y-3'>
-          <div>
-            <Input
-              id='email'
-              type='email'
-              placeholder='Email'
-              {...register('email')}
-              aria-invalid={!!errors.email}
-            />
-            {errors.email && (
-              <span className='text-xs text-red-500'>{errors.email.message}</span>
-            )}
-          </div>
           <div>
             <Input
               id='password'
@@ -82,6 +70,18 @@ export function LoginForm() {
             />
             {errors.password && (
               <span className='text-xs text-red-500'>{errors.password.message}</span>
+            )}
+          </div>
+          <div>
+            <Input
+              id='confirmPassword'
+              type='password'
+              placeholder='Confirmar senha'
+              {...register('confirmPassword')}
+              aria-invalid={!!errors.confirmPassword}
+            />
+            {errors.confirmPassword && (
+              <span className='text-xs text-red-500'>{errors.confirmPassword.message}</span>
             )}
           </div>
         </CardContent>
