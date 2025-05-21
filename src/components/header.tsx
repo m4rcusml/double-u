@@ -14,46 +14,52 @@ export function Header({ useDarkMode = false }: Props) {
   const navigate = useNavigate()
   const { toggleSidebar } = useSidebar()
 
-  const iconColorClass = useDarkMode ? 'text-white' : 'text-black'
-  const logoStyle = useDarkMode ? '' : 'invert'
+  const isDarkMode = document.documentElement.classList.contains('dark') || useDarkMode
+  const iconColorClass = isDarkMode ? 'text-white' : 'text-black'
+  const logoStyle = isDarkMode ? '' : 'invert'
   
+
   // Apply glassmorphism style when user is not logged in
-  const headerClass = isLogged 
-    ? `bg-muted w-full px-4 py-3 flex items-center justify-between shadow-sm ${useDarkMode ? 'dark' : ''}` 
-    : `w-full px-4 py-3 flex items-center justify-between ${useDarkMode ? 'dark' : ''} backdrop-blur-sm bg-background/70 border-b border-border/40`
+  const headerClass = isLogged
+    ? `bg-muted w-full px-4 py-4 flex items-center justify-between shadow-sm ${isDarkMode ? 'dark' : ''}`
+    : `w-full px-4 py-4 flex items-center justify-between ${isDarkMode ? 'dark' : ''} backdrop-blur-sm bg-background/70 border-b border-border/40`
+
+  function toggleTheme() {
+    document.documentElement.classList.toggle('dark')
+  }
 
   return (
     <header className={headerClass}>
-      <div className="flex items-center gap-3">
+      <div className='flex items-center gap-3'>
         {isLogged ? (
-          <Button size="icon" variant="ghost" onClick={toggleSidebar}>
+          <button className='cursor-pointer' onClick={toggleSidebar}>
             <Menu className={`w-6 h-6 ${iconColorClass}`} />
-          </Button>
+          </button>
         ) : (
-          <Button variant="outline" onClick={() => navigate('/auth')} className="text-foreground">
+          <Button variant='outline' onClick={() => navigate('/auth')} className='cursor-pointer text-foreground'>
             ENTRAR
           </Button>
         )}
       </div>
 
-      <div className="flex items-center gap-3">
-        <Button size="icon" variant="ghost">
-          {useDarkMode ? (
+      <div className='flex items-center gap-3'>
+        <button className='cursor-pointer' onClick={toggleTheme}>
+          {isDarkMode ? (
             <Sun className={`w-6 h-6 ${iconColorClass}`} />
           ) : (
             <Moon className={`w-6 h-6 ${iconColorClass}`} />
           )}
-        </Button>
+        </button>
 
-        <Button size="icon" variant="ghost">
+        <button >
           <Bell className={`w-6 h-6 ${iconColorClass}`} />
-        </Button>
+        </button>
 
-        <div className="hidden sm:block h-6 border-l border-border mx-2" />
+        <div className='hidden sm:block h-6 border-l border-border mx-2' />
 
         <img
           src={Logo}
-          alt="logo"
+          alt='logo'
           className={`w-10 ${logoStyle}`}
         />
       </div>
