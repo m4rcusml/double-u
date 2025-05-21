@@ -41,7 +41,7 @@ const Footer = () => {
 
 const socialIcons = [
     { icon: <Facebook className="w-5 h-5 fill-current stroke-0" />, href: "#", label: "Facebook" },
-    { icon: <Instagram className="w-5 h-5" />, href: "#", label: "Instagram" },
+    { icon: <Instagram className="w-5 h-5 stroke-2" />, href: "#", label: "Instagram" },
     { icon: <Linkedin className="w-5 h-5 fill-current stroke-0" />, href: "#", label: "LinkedIn" }
 ];
 
