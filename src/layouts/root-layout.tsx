@@ -8,7 +8,7 @@ export function RootLayout() {
     <SidebarProvider>
       <AppSidebar />
 
-      <main className='h-full w-full flex flex-col'>
+      <main className='h-[100vh] overflow-y-auto w-full flex flex-col'>
         <Header />
 
         <Outlet />

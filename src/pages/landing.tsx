@@ -6,7 +6,6 @@ const HeroSection = lazy(() => import("@/components/landing/hero-section"));
 const BenefitsSection = lazy(() => import("@/components/landing/benefits-section"));
 const TestimonialSection = lazy(() => import("@/components/landing/testimonial-section"));
 const CTASection = lazy(() => import("@/components/landing/cta-section"));
-const Footer = lazy(() => import("@/components/landing/footer"));
 
 const Landing = () => {
   return (
@@ -30,9 +29,6 @@ const Landing = () => {
           />
         </Suspense>
       </main>
-      <Suspense fallback={<div className="h-20" />}>
-        <Footer />
-      </Suspense>
     </div>
   );
 };

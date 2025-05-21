@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/u
 
 export function Simulations() {
   return (<>
-    <section className='flex flex-col gap-6 p-6'>
+    <section className='flex flex-col gap-6 p-6 max-w-4xl mx-auto'>
       <div className='flex flex-col gap-1'>
         <h1 className='text-2xl font-bold'>Simulações</h1>
         <p className='text-muted-foreground'>Lorem ipsum dolor sit amet</p>

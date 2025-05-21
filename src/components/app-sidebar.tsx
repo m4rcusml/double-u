@@ -53,7 +53,7 @@ const items = [
   },
   {
     title: 'Falar com consultor',
-    url: 'consultor',
+    url: 'chat',
     icon: MessageCircleMore,
   },
   {

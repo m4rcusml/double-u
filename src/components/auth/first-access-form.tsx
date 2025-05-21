@@ -1,12 +1,13 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
-import { Link } from 'react-router'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
+import { Link, useNavigate } from 'react-router'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { Button } from './ui/button'
-import { Input } from './ui/input'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { supabase } from '@/lib/supabaseClient'
 
 type FormSchema = z.infer<typeof schema>
 
@@ -15,12 +16,29 @@ const schema = z.object({
 });
 
 export function FirstAccessForm() {
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
   })
 
-  function submit(data: FormSchema) {
-    alert(JSON.stringify(data))
+  async function submit(data: FormSchema) {
+    try {
+      const { email } = data
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: false,
+          emailRedirectTo: undefined, // Prevents magic link, only sends OTP code
+        }
+      })
+      if (error) {
+        alert(error.message)
+        return
+      }
+      navigate('verification', { state: { email } })
+    } catch (err: any) {
+      alert('Erro ao enviar o código de verificação.')
+    }
   }
 
   return (
@@ -28,7 +46,7 @@ export function FirstAccessForm() {
       <CardHeader>
         <CardTitle>Primeiro acesso</CardTitle>
         <CardDescription>
-          Preencha os dados abaixo para criar sua senha
+          Insira seu email e clique em continuar para receber um código de verificação
         </CardDescription>
       </CardHeader>
 
