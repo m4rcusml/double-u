@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '../ui/button'
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '../ui/input-otp'
 import { supabase } from '../../lib/supabaseClient' // adjust path as needed
+import { useLocation } from 'react-router'
+import { toast } from 'sonner'
 
 export function OtpVerificationForm() {
-  const { email } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const email = location.state?.email
   const [otp, setOtp] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,13 +27,14 @@ export function OtpVerificationForm() {
     const { error } = await supabase.auth.verifyOtp({
       email,
       token: otp,
-      type: 'signup'
+      type: 'email',
     })
     if (error) {
       setError(error.message)
     } else {
       // OTP verified and account created, proceed to next step
-      alert('Conta criada e OTP verificado com sucesso!')
+      toast('Conta criada e OTP verificado com sucesso!')
+      navigate('/auth/first-access', { state: { email } })
     }
     setLoading(false)
   }
