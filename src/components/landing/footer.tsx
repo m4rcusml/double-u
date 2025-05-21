@@ -1,6 +1,4 @@
 import { Facebook, Instagram, Linkedin, ChevronUp, Mail, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -40,9 +38,9 @@ const Footer = () => {
   ];
 
 const socialIcons = [
-    { icon: <Facebook className="w-5 h-5 fill-current stroke-0" />, href: "#", label: "Facebook" },
-    { icon: <Instagram className="w-5 h-5 stroke-2" />, href: "#", label: "Instagram" },
-    { icon: <Linkedin className="w-5 h-5 fill-current stroke-0" />, href: "#", label: "LinkedIn" }
+    { icon: <Facebook className="w-5 h-5 fill-current stroke-0" />, href: "https://www.facebook.com/W1consultoria/", label: "Facebook" },
+    { icon: <Instagram className="w-5 h-5 stroke-2" />, href: "https://www.instagram.com/w1consultoria/", label: "Instagram" },
+    { icon: <Linkedin className="w-5 h-5 fill-current stroke-0" />, href: "https://www.linkedin.com/company/w1-consultoria", label: "LinkedIn" }
 ];
 
   return (
@@ -70,7 +68,7 @@ const socialIcons = [
             <div className="flex space-x-4">
               <div className="flex items-center">
                 <Phone className="w-4 h-4 text-emerald-500 mr-2" />
-                <span className="text-sm">(11) 3456-7890</span>
+                <span className="text-sm items-center">+55 (11) 4301-7007</span>
               </div>
               <div className="flex items-center">
                 <Mail className="w-4 h-4 text-emerald-500 mr-2" />
@@ -109,6 +107,7 @@ const socialIcons = [
                   href={social.href}
                   className="text-gray-400 hover:text-emerald-500 transition-colors duration-300"
                   aria-label={social.label}
+                  target="_blank"
                 >
                   {social.icon}
                 </a>

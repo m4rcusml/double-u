@@ -22,7 +22,7 @@ export function Header({ useDarkMode = false }: Props) {
   // Apply glassmorphism style when user is not logged in
   const headerClass = isLogged
     ? `bg-muted w-full px-4 py-4 flex items-center justify-between shadow-sm ${isDarkMode ? 'dark' : ''}`
-    : `w-full px-4 py-4 flex items-center justify-between ${isDarkMode ? 'dark' : ''} backdrop-blur-sm bg-background/70 border-b border-border/40`
+    : `w-full px-4 py-4 flex items-center justify-between ${isDarkMode ? 'dark' : ''} backdrop-blur-sm bg-background/85 border-b border-border/40`
 
   function toggleTheme() {
     document.documentElement.classList.toggle('dark')
@@ -43,14 +43,6 @@ export function Header({ useDarkMode = false }: Props) {
       </div>
 
       <div className='flex items-center gap-3'>
-        <button className='cursor-pointer' onClick={toggleTheme}>
-          {isDarkMode ? (
-            <Sun className={`w-6 h-6 ${iconColorClass}`} />
-          ) : (
-            <Moon className={`w-6 h-6 ${iconColorClass}`} />
-          )}
-        </button>
-
         <button >
           <Bell className={`w-6 h-6 ${iconColorClass}`} />
         </button>

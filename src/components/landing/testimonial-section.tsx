@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Testimonial {
@@ -16,20 +16,20 @@ const TestimonialSection = () => {
   const testimonials: Testimonial[] = [
     {
       quote: "A W1 mudou o jogo. Antes, eu achava que holding era só para grandes empresas. Hoje pago menos impostos e minha família dorme tranquila.",
-      author: "Carlos Diniz",
-      company: "Grupo Diniz",
+      author: "Marcus Valente",
+      company: "Grupo Valente",
       rating: 5
     },
     {
-      quote: "Em apenas 3 meses, reorganizamos toda a estrutura empresarial. O retorno do investimento foi absurdamente rápido.",
-      author: "Mariana Lopes",
-      company: "Lopes Arquitetura",
+      quote: "Em apenas 3 meses, reorganizamos toda a estrutura empresarial. O retorno do investimento foi absurdamente rápido. A equipe é super atenciosa e sempre disposta a ajudar.",
+      author: "Nicole Riedla",
+      company: "Riedla Arquitetura",
       rating: 5
     },
     {
       quote: "A segurança jurídica que ganhei com a holding familiar é impressionante. Recomendo para qualquer empresa que pensa no longo prazo.",
-      author: "Roberto Gomes",
-      company: "Gomes Automação",
+      author: "José Lima",
+      company: "Lima Automação",
       rating: 5
     }
   ];
@@ -87,7 +87,7 @@ const TestimonialSection = () => {
                 <div key={index} className="w-full flex-shrink-0 px-4">
                   <div className="bg-white border border-gray-100 rounded-xl shadow-lg p-6 md:p-8">
                     <div className="flex justify-between items-start mb-6">
-                      <div className="text-5xl font-serif text-emerald-600">"</div>
+                        <Quote className="w-6 h-6 stroke-none fill-emerald-600" />
                       <div className="flex">
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
                           <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
