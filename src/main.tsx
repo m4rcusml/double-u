@@ -17,6 +17,7 @@ import { CreatePasswordForm } from './components/auth/create-password-form'
 import { useAuthStore } from './stores/useAuthStore'
 import { Toaster } from './components/ui/sonner'
 import { Settings } from './pages/settings'
+import { Properties } from './pages/properties'
 
 export function RequireAuth({ children }: any) {
   const auth = useAuthStore(); // This hook should return if user is authenticated
@@ -50,7 +51,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="simulations" element={<Simulations />} />
           <Route path="my-journey" element={<h1>My Jorney</h1>} />
           <Route path="documents" element={<h1>Documentos</h1>} />
-          <Route path="properties" element={<h1>Imóveis</h1>} />
+          <Route path="properties" element={<Properties />} />
           <Route path="chat" element={<Chat />} />
           <Route path="settings" element={<Settings />} />
         </Route>
