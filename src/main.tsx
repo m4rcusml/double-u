@@ -18,6 +18,9 @@ import { useAuthStore } from './stores/useAuthStore'
 import { Toaster } from './components/ui/sonner'
 import { Settings } from './pages/settings'
 import { Properties } from './pages/properties'
+import { Documents } from './pages/documents'
+import { MyJorney } from './pages/my-jorney'
+import { Dashboard } from './pages/dashboard'
 
 export function RequireAuth({ children }: any) {
   const auth = useAuthStore(); // This hook should return if user is authenticated
@@ -46,11 +49,11 @@ createRoot(document.getElementById('root')!).render(
             </RequireAuth>
           }
         >
-          <Route index element={<h1>Dashboard</h1>} />
-          <Route path="dashboard" element={<h1>Dashboard</h1>} />
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="simulations" element={<Simulations />} />
-          <Route path="my-journey" element={<h1>My Jorney</h1>} />
-          <Route path="documents" element={<h1>Documentos</h1>} />
+          <Route path="my-journey" element={<MyJorney />} />
+          <Route path="documents" element={<Documents />} />
           <Route path="properties" element={<Properties />} />
           <Route path="chat" element={<Chat />} />
           <Route path="settings" element={<Settings />} />
