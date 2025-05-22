@@ -111,6 +111,10 @@
   --sidebar-ring: #34d399; /* Emerald 400 */
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html, body, #root {
   height: 100vh;
 }
