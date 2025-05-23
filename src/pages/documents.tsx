@@ -320,7 +320,7 @@ export const Documents: React.FC = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6 md:py-8">
         {/* Page Title and Add Button */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between flex-wrap gap-4 items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
               Documentos
