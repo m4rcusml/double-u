@@ -29,7 +29,7 @@ export function RequireAuth({ children }: any) {
   if (!auth.user) {
     // Redirect to login page if not authenticated
     // Save the attempted location for redirecting after login
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    return <Navigate to="/not-logged" state={{ from: location }} replace />;
   }
 
   return children;

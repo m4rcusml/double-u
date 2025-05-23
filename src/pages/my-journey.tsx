@@ -27,11 +27,9 @@ const MyJourney = () => {
     step2Errors,
     step3Errors,
     step4Errors,
-    step5Errors,
     step6Errors,
     
     // Ações
-    nextStep,
     prevStep,
     updateStep1Data,
     updateStep2Data,

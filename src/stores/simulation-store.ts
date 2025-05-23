@@ -56,9 +56,6 @@ const calculateResults = (inputs: SimulationInput): SimulationResult => {
   const patrimonio = parseFloat(inputs.patrimonio) || 0;
   const empresas = parseInt(inputs.empresas) || 0;
   const herdeiros = parseInt(inputs.herdeiros) || 0;
-  const imoveis = parseInt(inputs.imoveis) || 0;
-  const valorMercado = parseFloat(inputs.valorMercado) || 0;
-  const valorVenal = parseFloat(inputs.valorVenal) || 0;
   
   // Cálculos simulados (em uma aplicação real, estes seriam baseados em fórmulas específicas)
   const cenarioAtualImpostos = patrimonio * 0.08;

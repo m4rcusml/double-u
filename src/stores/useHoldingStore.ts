@@ -105,7 +105,7 @@ interface HoldingState {
   totalSteps: number;
   displaySteps: number;
   processStatus: 'PENDENTE' | 'EM ANÁLISE' | 'AGUARDANDO INFORMAÇÕES' | 'CONCLUÍDO';
-  
+
   // Dados de cada etapa
   step1Data: PersonalFamilyData;
   step2Data: PatrimonialData;
@@ -113,7 +113,7 @@ interface HoldingState {
   step4Data: DocumentationData;
   step5Data: RisksOpportunitiesData;
   step6Data: GovernanceData;
-  
+
   // Erros de validação
   step1Errors: FormErrors;
   step2Errors: FormErrors;
@@ -121,13 +121,13 @@ interface HoldingState {
   step4Errors: FormErrors;
   step5Errors: FormErrors;
   step6Errors: FormErrors;
-  
+
   // Ações
   nextStep: () => void;
   prevStep: () => void;
   setCurrentStep: (step: number) => void;
   setProcessStatus: (status: 'PENDENTE' | 'EM ANÁLISE' | 'AGUARDANDO INFORMAÇÕES' | 'CONCLUÍDO') => void;
-  
+
   // Atualização de dados
   updateStep1Data: (field: keyof PersonalFamilyData, value: any) => void;
   updateStep2Data: (field: keyof PatrimonialData, value: any) => void;
@@ -135,12 +135,12 @@ interface HoldingState {
   updateStep4Data: (field: keyof DocumentationData, value: any) => void;
   updateStep5Data: (field: keyof RisksOpportunitiesData, value: any) => void;
   updateStep6Data: (field: keyof GovernanceData, value: any) => void;
-  
+
   // Atualização de dados específicos
   updateChildData: (index: number, field: string, value: string) => void;
   updateDocumentStatus: (docId: number, status: 'PENDENTE' | 'ENVIADO' | 'EM ANÁLISE' | 'APROVADO' | 'REJEITADO') => void;
   uploadDocument: (docId: number, file: File) => void;
-  
+
   // Validação
   validateStep1: () => boolean;
   validateStep2: () => boolean;
@@ -149,7 +149,7 @@ interface HoldingState {
   validateStep5: () => boolean;
   validateStep6: () => boolean;
   handleStepSubmit: (step: number) => void;
-  
+
   // Reset
   resetForm: () => void;
 }
@@ -173,7 +173,7 @@ const initialState = {
   totalSteps: 6,
   displaySteps: 7,
   processStatus: 'EM ANÁLISE' as const,
-  
+
   // Dados de cada etapa
   step1Data: {
     fullName: '',
@@ -232,7 +232,7 @@ const initialState = {
     shareholderAgreementNeed: '',
     familyCouncilNeed: ''
   },
-  
+
   // Erros de validação
   step1Errors: {},
   step2Errors: {},
@@ -247,7 +247,7 @@ const useHoldingStore = create<HoldingState>()(
   persist(
     (set, get) => ({
       ...initialState,
-      
+
       // Navegação
       nextStep: () => {
         const { currentStep, displaySteps } = get();
@@ -256,7 +256,7 @@ const useHoldingStore = create<HoldingState>()(
           window.scrollTo(0, 0);
         }
       },
-      
+
       prevStep: () => {
         const { currentStep } = get();
         if (currentStep > 1) {
@@ -264,11 +264,11 @@ const useHoldingStore = create<HoldingState>()(
           window.scrollTo(0, 0);
         }
       },
-      
+
       setCurrentStep: (step: number) => set({ currentStep: step }),
-      
+
       setProcessStatus: (status) => set({ processStatus: status }),
-      
+
       // Atualização de dados
       updateStep1Data: (field, value) => {
         set((state) => {
@@ -277,19 +277,19 @@ const useHoldingStore = create<HoldingState>()(
           if (errors[field as string]) {
             delete errors[field as string];
           }
-          
+
           return {
             step1Data: { ...state.step1Data, [field]: value },
             step1Errors: errors
           };
         });
-        
+
         // Gerenciar campos de filhos quando o número de filhos mudar
         if (field === 'numberOfChildren') {
           const { step1Data } = get();
           const childrenCount = parseInt(value as string) || 0;
           const currentChildrenCount = step1Data.children.length;
-          
+
           if (childrenCount > currentChildrenCount) {
             // Adicionar mais campos de filhos
             const newChildren = [...step1Data.children];
@@ -308,7 +308,7 @@ const useHoldingStore = create<HoldingState>()(
           }
         }
       },
-      
+
       updateStep2Data: (field, value) => {
         set((state) => {
           // Limpar erro se existir
@@ -316,14 +316,14 @@ const useHoldingStore = create<HoldingState>()(
           if (errors[field as string]) {
             delete errors[field as string];
           }
-          
+
           return {
             step2Data: { ...state.step2Data, [field]: value },
             step2Errors: errors
           };
         });
       },
-      
+
       updateStep3Data: (field, value) => {
         set((state) => {
           // Limpar erro se existir
@@ -331,14 +331,14 @@ const useHoldingStore = create<HoldingState>()(
           if (errors[field as string]) {
             delete errors[field as string];
           }
-          
+
           return {
             step3Data: { ...state.step3Data, [field]: value },
             step3Errors: errors
           };
         });
       },
-      
+
       updateStep4Data: (field, value) => {
         set((state) => {
           // Limpar erro se existir
@@ -346,14 +346,14 @@ const useHoldingStore = create<HoldingState>()(
           if (errors[field as string]) {
             delete errors[field as string];
           }
-          
+
           return {
             step4Data: { ...state.step4Data, [field]: value },
             step4Errors: errors
           };
         });
       },
-      
+
       updateStep5Data: (field, value) => {
         set((state) => {
           // Limpar erro se existir
@@ -361,14 +361,14 @@ const useHoldingStore = create<HoldingState>()(
           if (errors[field as string]) {
             delete errors[field as string];
           }
-          
+
           return {
             step5Data: { ...state.step5Data, [field]: value },
             step5Errors: errors
           };
         });
       },
-      
+
       updateStep6Data: (field, value) => {
         set((state) => {
           // Limpar erro se existir
@@ -376,70 +376,70 @@ const useHoldingStore = create<HoldingState>()(
           if (errors[field as string]) {
             delete errors[field as string];
           }
-          
+
           return {
             step6Data: { ...state.step6Data, [field]: value },
             step6Errors: errors
           };
         });
       },
-      
+
       // Atualização de dados específicos
       updateChildData: (index, field, value) => {
         set((state) => {
           const newChildren = [...state.step1Data.children];
           newChildren[index] = { ...newChildren[index], [field]: value };
-          
+
           // Limpar erro se existir
           const errors = { ...state.step1Errors };
           const errorKey = `children.${index}.${field}`;
           if (errors[errorKey]) {
             delete errors[errorKey];
           }
-          
+
           return {
             step1Data: { ...state.step1Data, children: newChildren },
             step1Errors: errors
           };
         });
       },
-      
+
       updateDocumentStatus: (docId, status) => {
         set((state) => {
           const updatedDocs = state.step4Data.documents.map(doc =>
             doc.id === docId ? { ...doc, status } : doc
           );
-          
+
           return {
             step4Data: { ...state.step4Data, documents: updatedDocs }
           };
         });
       },
-      
+
       uploadDocument: (docId, file) => {
         set((state) => {
           const updatedDocs = state.step4Data.documents.map(doc =>
             doc.id === docId ? { ...doc, file, status: 'ENVIADO' as const } : doc
           );
-          
+
           // Limpar erro se existir
           const errors = { ...state.step4Errors };
           if (errors.documents) {
             delete errors.documents;
           }
-          
+
           return {
             step4Data: { ...state.step4Data, documents: updatedDocs },
             step4Errors: errors
           };
         });
       },
-      
+
       // Validação
       validateStep1: () => {
         const { step1Data } = get();
         const errors: FormErrors = {};
-        
+
         // Validação de dados pessoais
         if (!step1Data.fullName.trim()) errors.fullName = 'Nome completo é obrigatório';
         if (!step1Data.cpf.trim()) errors.cpf = 'CPF é obrigatório';
@@ -450,7 +450,7 @@ const useHoldingStore = create<HoldingState>()(
         if (!step1Data.nationality.trim()) errors.nationality = 'Nacionalidade é obrigatória';
         if (!step1Data.profession.trim()) errors.profession = 'Profissão é obrigatória';
         if (!step1Data.fullAddress.trim()) errors.fullAddress = 'Endereço é obrigatório';
-        
+
         // Validação de filhos se houver
         if (parseInt(step1Data.numberOfChildren) > 0) {
           step1Data.children.forEach((child, index) => {
@@ -459,67 +459,67 @@ const useHoldingStore = create<HoldingState>()(
             // Adicione mais validações conforme necessário
           });
         }
-        
+
         set({ step1Errors: errors });
         return Object.keys(errors).length === 0;
       },
-      
+
       validateStep2: () => {
         const { step2Data } = get();
         const errors: FormErrors = {};
-        
+
         if (!step2Data.totalEstimatedAssets.trim()) errors.totalEstimatedAssets = 'Patrimônio total estimado é obrigatório';
         if (!step2Data.assetOrganizationLevel) errors.assetOrganizationLevel = 'Grau de organização é obrigatório';
         // Adicione mais validações conforme necessário
-        
+
         set({ step2Errors: errors });
         return Object.keys(errors).length === 0;
       },
-      
+
       validateStep3: () => {
-        const { step3Data } = get();
+        const { } = get();
         const errors: FormErrors = {};
-        
+
         // Validações para a etapa 3
         // Exemplo: if (step3Data.mainObjectives.length === 0) errors.mainObjectives = 'Selecione ao menos um objetivo';
-        
+
         set({ step3Errors: errors });
         return Object.keys(errors).length === 0;
       },
-      
+
       validateStep4: () => {
-        const { step4Data } = get();
+        const { } = get();
         const errors: FormErrors = {};
-        
+
         // Validações para a etapa 4
         // Exemplo: const pendingDocs = step4Data.documents.filter(doc => doc.status === 'PENDENTE').length;
         // if (pendingDocs > 0) errors.documents = `Ainda há ${pendingDocs} documentos pendentes.`;
-        
+
         set({ step4Errors: errors });
         return Object.keys(errors).length === 0;
       },
-      
+
       validateStep5: () => {
-        const { step5Data } = get();
+        const { } = get();
         const errors: FormErrors = {};
-        
+
         // Validações para a etapa 5
-        
+
         set({ step5Errors: errors });
         return Object.keys(errors).length === 0;
       },
-      
+
       validateStep6: () => {
         const { step6Data } = get();
         const errors: FormErrors = {};
-        
+
         if (!step6Data.administratorPreference) errors.administratorPreference = 'Preferência de administrador é obrigatória';
         // Adicione mais validações conforme necessário
-        
+
         set({ step6Errors: errors });
         return Object.keys(errors).length === 0;
       },
-      
+
       handleStepSubmit: (step: number) => {
         const store = get();
         const validationFunctions = [
@@ -530,13 +530,13 @@ const useHoldingStore = create<HoldingState>()(
           store.validateStep5,
           store.validateStep6
         ];
-        
+
         if (step >= 1 && step <= validationFunctions.length) {
           const isValid = validationFunctions[step - 1]();
-          
+
           if (isValid) {
             console.log(`Step ${step} Data:`, store[`step${step}Data` as keyof HoldingState]);
-            
+
             // Na última etapa, enviar todos os dados
             if (step === store.totalSteps) {
               console.log("Submitting all data...");
@@ -549,7 +549,7 @@ const useHoldingStore = create<HoldingState>()(
                 step6: store.step6Data,
               };
               console.log("All Data:", allData);
-              
+
               // TODO: Enviar dados para API
               // fetch('/api/submit-holding-data', { 
               //   method: 'POST', 
@@ -559,7 +559,7 @@ const useHoldingStore = create<HoldingState>()(
               //  .then(response => response.json())
               //  .then(data => { console.log('Success:', data); store.nextStep(); })
               //  .catch((error) => { console.error('Error:', error); alert('Erro ao enviar dados.'); });
-              
+
               store.nextStep(); // Simular sucesso por enquanto
             } else {
               store.nextStep();
@@ -567,7 +567,7 @@ const useHoldingStore = create<HoldingState>()(
           }
         }
       },
-      
+
       // Reset
       resetForm: () => set(initialState),
     }),
