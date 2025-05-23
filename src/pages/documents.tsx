@@ -31,7 +31,6 @@ export const Documents: React.FC = () => {
   // Usando o store Zustand
   const { 
     documents, 
-    isLoading, 
     error,
     getAbsentDocuments,
     getPendingDocuments,

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
+  Cell, LineChart, Line, AreaChart, Area
 } from 'recharts';
 import {
-  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
+  Card, CardContent, CardDescription, CardHeader, CardTitle
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,9 +13,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import {
   ArrowUpRight, ArrowDownRight, Building2, Home, FileText,
-  TrendingUp, Wallet, Users, AlertTriangle, CheckCircle,
-  ChevronRight, BarChart3, PieChart as PieChartIcon,
-  LineChart as LineChartIcon, Calendar, RefreshCw
+  TrendingUp, Wallet,
+  ChevronRight, BarChart3, RefreshCw
 } from 'lucide-react';
 import { usePropertyStore, type Property } from '@/stores/usePropertyStore';
 import useHoldingStore from '@/stores/useHoldingStore';
@@ -24,12 +23,6 @@ import { useSimulationStore } from '@/stores/simulation-store';
 
 // Cores para gráficos
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
-const STATUS_COLORS = {
-  approved: '#10b981',
-  pending: '#f59e0b',
-  absent: '#6b7280',
-  rejected: '#ef4444'
-};
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -40,7 +33,7 @@ export function Dashboard() {
   // Hooks para os stores
   const { properties } = usePropertyStore();
   const {
-    step1Data, step2Data, processStatus, currentStep, totalSteps
+    step2Data, processStatus, currentStep, totalSteps
   } = useHoldingStore();
   const {
     documents, getAbsentDocuments, getPendingDocuments,
@@ -70,21 +63,6 @@ export function Dashboard() {
     : 0;
 
   const holdingProgress = (currentStep / (totalSteps + 1)) * 100;
-
-  // Dados para gráficos
-  const propertyByCategory = properties.reduce((acc: Record<string, number>, property: Property) => {
-    const category = property.category || 'Outros';
-    if (!acc[category]) {
-      acc[category] = 0;
-    }
-    acc[category] += property.marketValue;
-    return acc;
-  }, {} as Record<string, number>);
-
-  const propertyByCategoryData = Object.entries(propertyByCategory).map(([name, value]) => ({
-    name,
-    value: value as number
-  }));
 
   // Dados de evolução patrimonial (simulados para demonstração)
   const generatePatrimonialEvolutionData = () => {
@@ -136,14 +114,6 @@ export function Dashboard() {
 
   const patrimonialEvolutionData = generatePatrimonialEvolutionData();
 
-  // Dados de documentos por status
-  const documentStatusData = [
-    { name: 'Aprovados', value: documentStats.approved, color: STATUS_COLORS.approved },
-    { name: 'Pendentes', value: documentStats.pending, color: STATUS_COLORS.pending },
-    { name: 'Ausentes', value: documentStats.absent, color: STATUS_COLORS.absent },
-    { name: 'Rejeitados', value: documentStats.rejected, color: STATUS_COLORS.rejected }
-  ];
-
   // Dados de simulação de economia
   const simulationData = hasSimulated && simulationResults ? [
     { name: 'Economia Fiscal', value: simulationResults.economiaFiscal },
@@ -160,11 +130,6 @@ export function Dashboard() {
   // Função para navegar para a página de propriedades
   function navigateToProperties() {
     navigate('/properties');
-  }
-
-  // Função para navegar para a página de documentos
-  function navigateToDocuments() {
-    navigate('/documents');
   }
 
   // Função para navegar para a página de simulação
@@ -188,11 +153,6 @@ export function Dashboard() {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(value);
-  };
-
-  // Formatador de percentuais
-  const formatPercent = (value: number) => {
-    return `${value.toFixed(1)}%`;
   };
 
   // Componente de tooltip personalizado para gráficos
@@ -397,7 +357,7 @@ export function Dashboard() {
                           <YAxis tickFormatter={(value) => `${value}%`} />
                           <Tooltip formatter={(value) => `${value}%`} />
                           <Bar dataKey="value" fill="#8884d8">
-                            {simulationData.map((entry, index) => (
+                            {simulationData.map((_, index) => (
                               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                           </Bar>

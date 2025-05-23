@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Input as ShadcnInput } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
