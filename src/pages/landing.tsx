@@ -19,6 +19,7 @@ const Landing = () => {
             subtitle="Responda poucas perguntas e receba um plano personalizado para sua empresa"
             buttonText="Quero minha simulação gratuita"
             buttonVariant="primary"
+            redirect="/not-logged/simulations"
           />
           <TestimonialSection />
           <CTASection 
@@ -26,6 +27,7 @@ const Landing = () => {
             subtitle={<>Solicite agora sua <span className="text-emerald-500 font-medium">simulação gratuita</span> e descubra como a W1 pode ajudar você a economizar, crescer e proteger o seu patrimônio.</>}
             buttonText="Começar agora"
             buttonVariant="light"
+            redirect="/auth/first-access"
           />
         </Suspense>
       </main>

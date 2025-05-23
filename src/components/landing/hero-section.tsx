@@ -42,7 +42,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
             <Button 
               className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-8 text-base rounded-md flex items-center justify-center"
-              onClick={() => window.open("#simulation", "_self")}
+              onClick={() => window.open("not-logged/simulations", "_self")}
             >
               Faça uma simulação. É grátis
               <ChevronRight className="ml-2 w-4 h-4" />
@@ -51,7 +51,7 @@ const HeroSection = () => {
             <Button 
               variant="outline"
               className="w-full sm:w-auto bg-white border-white/30 text-gray-900 hover:bg-white/10 py-3 px-8 text-base"
-              onClick={() => window.open("#saiba-mais", "_self")}
+              onClick={() => window.open("#benefits-section", "_self")}
             >
               Saiba mais
             </Button>

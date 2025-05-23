@@ -22,7 +22,7 @@ const BenefitsSection = () => {
   ];
 
   return (
-    <div className="bg-white">
+    <div id="benefits-section" className="bg-white">
       <section className="bg-white text-black py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <div className="border-l-4 border-emerald-600 pl-3 sm:pl-4 mb-8 md:mb-10">
           <h2 className="text-sm md:text-base lg:text-lg font-medium">
