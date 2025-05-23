@@ -52,7 +52,7 @@ const items = [
     icon: Landmark,
   },
   {
-    title: 'Falar com consultor',
+    title: 'Ajuda',
     url: 'chat',
     icon: MessageCircleMore,
   },

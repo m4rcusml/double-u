@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { SendHorizonal } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
+import axios from 'axios'
 
 interface Message {
   id: string
@@ -13,6 +14,7 @@ export function Chat() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -23,6 +25,16 @@ export function Chat() {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Limpar mensagem de erro após 5 segundos
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null)
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [error])
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return
@@ -37,18 +49,48 @@ export function Chat() {
     setMessages(prev => [...prev, userMessage])
     setInputValue('')
     setIsLoading(true)
+    setError(null)
 
-    // Simular resposta do bot (substitua pela sua lógica de API)
-    setTimeout(() => {
+    try {
+      // Chamada à API - enviando apenas a mensagem como string
+      // Usando URL completa para garantir comunicação direta
+      const response = await axios.post(
+        'http://localhost:5000/api/chat',
+        { message: userMessage.content },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      // Adicionar resposta do bot
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'Obrigado pela sua mensagem! Como posso ajudá-lo hoje?',
+        content: response.data.reply,
         isUser: false,
         timestamp: new Date()
       }
+      
       setMessages(prev => [...prev, botMessage])
+    } catch (err: any) {
+      console.error('Erro ao enviar mensagem:', err)
+      
+      // Exibir mensagem de erro
+      setError(err.response?.data?.error || err.message || 'Erro ao processar sua mensagem')
+      
+      // Adicionar mensagem de erro como mensagem do bot
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: 'Desculpe, estou enfrentando dificuldades técnicas. Por favor, tente novamente mais tarde.',
+        isUser: false,
+        timestamp: new Date()
+      }
+      
+      setMessages(prev => [...prev, errorMessage])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -62,6 +104,13 @@ export function Chat() {
 
   return (
     <section className='flex flex-col h-full overflow-y-hidden'>
+      {/* Mensagem de erro */}
+      {error && (
+        <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative' role='alert'>
+          <span className='block sm:inline'>{error}</span>
+        </div>
+      )}
+      
       {hasMessages ? (
         <div className='flex-1 overflow-y-auto p-4'>
           <div className='max-w-3xl mx-auto space-y-4'>
@@ -115,8 +164,7 @@ export function Chat() {
             Digite sua mensagem abaixo para começar a conversa.
           </p>
         </div >
-      )
-      }
+      )}
 
       {/* Input de Mensagem */}
       <div className='bg-muted border-t border-muted p-4'>
