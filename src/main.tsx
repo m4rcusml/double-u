@@ -19,7 +19,7 @@ import { Toaster } from './components/ui/sonner'
 import { Settings } from './pages/settings'
 import { Properties } from './pages/properties'
 import { Documents } from './pages/documents'
-import { MyJorney } from './pages/my-jorney'
+import { MyJourney } from './pages/my-jorney'
 import { Dashboard } from './pages/dashboard'
 
 export function RequireAuth({ children }: any) {
@@ -31,8 +31,6 @@ export function RequireAuth({ children }: any) {
     // Save the attempted location for redirecting after login
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
-
-  console.log(auth.user)
 
   return children;
 }
@@ -52,7 +50,7 @@ createRoot(document.getElementById('root')!).render(
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="simulations" element={<Simulations />} />
-          <Route path="my-journey" element={<MyJorney />} />
+          <Route path="my-journey" element={<MyJourney />} />
           <Route path="documents" element={<Documents />} />
           <Route path="properties" element={<Properties />} />
           <Route path="chat" element={<Chat />} />

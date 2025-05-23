@@ -1,5 +1,5 @@
 import React from 'react';
-import { Info, TrendingUp } from 'lucide-react';
+import { Info, TrendingDown, TrendingUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface PropertyCardProps {
@@ -46,9 +46,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           <span className='text-2xl font-semibold text-gray-900'>
             {formatPrice(price)}
           </span>
-          <div className='flex items-center gap-1 text-green-600'>
-            <TrendingUp className='w-4 h-4' />
-            <span className='text-sm font-medium'>{priceChange}%</span>
+          <div className={`flex items-center gap-1 ${priceChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            {priceChange >= 0 ? <TrendingUp className='w-4 h-4' /> : <TrendingDown className='w-4 h-4' />}
+            <span className='text-sm font-medium'>{priceChange.toFixed(2)}%</span>
           </div>
         </div>
 
