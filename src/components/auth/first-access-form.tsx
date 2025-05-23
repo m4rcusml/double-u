@@ -28,7 +28,8 @@ export function FirstAccessForm() {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          shouldCreateUser: false
+          shouldCreateUser: true, // Changed to true to allow new user creation
+          emailRedirectTo: `${window.location.origin}/auth/callback`
         }
       })
       if (error) {

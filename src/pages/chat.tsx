@@ -55,7 +55,7 @@ export function Chat() {
       // Chamada à API - enviando apenas a mensagem como string
       // Usando URL completa para garantir comunicação direta
       const response = await axios.post(
-        'http://localhost:5000/api/chat',
+        'https://double-u-back.onrender.com/api/chat',
         { message: userMessage.content },
         {
           headers: {

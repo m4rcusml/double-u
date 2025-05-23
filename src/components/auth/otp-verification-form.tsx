@@ -34,7 +34,7 @@ export function OtpVerificationForm() {
     } else {
       // OTP verified and account created, proceed to next step
       toast('Conta criada e OTP verificado com sucesso!')
-      navigate('/auth/first-access', { state: { email } })
+      navigate('/auth/first-access/create-password', { state: { email } })
     }
     setLoading(false)
   }

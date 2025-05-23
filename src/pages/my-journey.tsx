@@ -6,8 +6,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Calendar, ChevronRight, FileText, HelpCircle, UploadCloud, CheckCircle, Clock } from 'lucide-react';
 import useHoldingStore from '@/stores/useHoldingStore'; // Importando o store Zustand
+import { useNavigate } from 'react-router';
 
 const MyJourney = () => {
+  const navigate = useNavigate();
   // Usando o store Zustand em vez de useState
   const {
     // Estados
@@ -44,7 +46,8 @@ const MyJourney = () => {
 
   // Helper Functions
   const needHelp = () => {
-    alert('Funcionalidade de ajuda em desenvolvimento. Entre em contato com seu consultor.');
+    // Lógica para abrir o modal de ajuda
+    console.log('Abriu o modal de ajuda');
   };
 
   // --- Render Functions for Each Step --- //
@@ -574,7 +577,7 @@ const MyJourney = () => {
             Nossa equipe de consultoria analisará tudo cuidadosamente.
             Entraremos em contato em breve caso necessitemos de informações adicionais ou para agendar os próximos passos.
         </p>
-        <Button onClick={() => alert('Funcionalidade de "Voltar ao Início" ou "Dashboard" a ser implementada.')} variant="outline">
+        <Button onClick={() => navigate('/')} variant="outline">
             Voltar ao Início
         </Button>
     </div>

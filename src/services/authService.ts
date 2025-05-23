@@ -17,7 +17,8 @@ export const signIn = async (email: string, password: string) => {
 }
 
 export const signOut = async () => {
-  return await supabase.auth.signOut()
+  localStorage.clear();
+  return await supabase.auth.signOut();
 }
 
 export const getSession = async () => {

@@ -1,5 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { FileText, Upload, Edit, Trash2, AlertCircle, X, RefreshCw } from 'lucide-react';
+import { 
+  FileText, Upload, Edit, Trash2, AlertCircle, X, RefreshCw, 
+  CheckCircle,
+  AlertTriangle
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -8,7 +12,20 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { 
+  PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend 
+} from 'recharts';
 import useDocumentStore, { type Document, type DocumentStatus } from '@/stores/useDocumentStore';
+
+// Cores para gráficos
+const STATUS_COLORS = {
+  approved: '#10b981',
+  pending: '#f59e0b',
+  absent: '#6b7280',
+  rejected: '#ef4444'
+};
 
 export const Documents: React.FC = () => {
   // Usando o store Zustand
@@ -47,6 +64,23 @@ export const Documents: React.FC = () => {
   const pendingDocuments = getPendingDocuments();
   const approvedDocuments = getApprovedDocuments();
   const rejectedDocuments = getRejectedDocuments();
+
+  // Dados para estatísticas de documentos
+  const documentStats = {
+    absent: absentDocuments.length,
+    pending: pendingDocuments.length,
+    approved: approvedDocuments.length,
+    rejected: rejectedDocuments.length,
+    total: documents.length
+  };
+
+  // Dados para o gráfico de status
+  const documentStatusData = [
+    { name: 'Aprovados', value: documentStats.approved, color: STATUS_COLORS.approved },
+    { name: 'Pendentes', value: documentStats.pending, color: STATUS_COLORS.pending },
+    { name: 'Ausentes', value: documentStats.absent, color: STATUS_COLORS.absent },
+    { name: 'Rejeitados', value: documentStats.rejected, color: STATUS_COLORS.rejected }
+  ];
 
   // Função para formatar data
   const formatDate = (dateString?: string) => {
@@ -350,6 +384,145 @@ export const Documents: React.FC = () => {
           </Alert>
         )}
 
+        {/* Status dos Documentos - Integrado do Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <Card className="bg-green-50 border-green-100">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm font-medium text-green-700">Aprovados</p>
+                  <h3 className="text-2xl font-bold mt-1 text-green-900">{documentStats.approved}</h3>
+                </div>
+                <div className="p-2 bg-green-100 rounded-full">
+                  <CheckCircle className="h-5 w-5 text-green-700" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <Progress value={(documentStats.approved / documentStats.total) * 100} className="h-2 bg-green-200 [&>*]:bg-green-600" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-yellow-50 border-yellow-100">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm font-medium text-yellow-700">Pendentes</p>
+                  <h3 className="text-2xl font-bold mt-1 text-yellow-900">{documentStats.pending}</h3>
+                </div>
+                <div className="p-2 bg-yellow-100 rounded-full">
+                  <AlertTriangle className="h-5 w-5 text-yellow-700" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <Progress value={(documentStats.pending / documentStats.total) * 100} className="h-2 bg-yellow-200 [&>*]:bg-yellow-600" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gray-50 border-gray-100">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm font-medium text-gray-700">Ausentes</p>
+                  <h3 className="text-2xl font-bold mt-1 text-gray-900">{documentStats.absent}</h3>
+                </div>
+                <div className="p-2 bg-gray-200 rounded-full">
+                  <FileText className="h-5 w-5 text-gray-700" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <Progress value={(documentStats.absent / documentStats.total) * 100} className="h-2 bg-gray-200 [&>*]:bg-gray-600" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-red-50 border-red-100">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm font-medium text-red-700">Rejeitados</p>
+                  <h3 className="text-2xl font-bold mt-1 text-red-900">{documentStats.rejected}</h3>
+                </div>
+                <div className="p-2 bg-red-100 rounded-full">
+                  <AlertTriangle className="h-5 w-5 text-red-700" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <Progress value={(documentStats.rejected / documentStats.total) * 100} className="h-2 bg-red-200 [&>*]:bg-red-600" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Gráficos de Documentos - Integrado do Dashboard */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Gráfico de Status */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Status dos Documentos</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[300px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={documentStatusData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {documentStatusData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <RechartsTooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Documentos Pendentes */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Documentos Pendentes</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {pendingDocuments.length > 0 ? (
+                  pendingDocuments.slice(0, 4).map((doc) => (
+                    <div key={doc.id} className="flex items-start p-3 border rounded-lg">
+                      <div className="p-2 bg-yellow-100 rounded-lg mr-3">
+                        <FileText className="h-5 w-5 text-yellow-700" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium">{doc.title}</h4>
+                        <p className="text-sm text-gray-500">{doc.description}</p>
+                        {doc.reason && (
+                          <p className="text-xs text-red-600 mt-1">Motivo: {doc.reason}</p>
+                        )}
+                      </div>
+                      <Badge variant="outline" className="bg-yellow-100 text-yellow-800 ml-2">
+                        Pendente
+                      </Badge>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    Não há documentos pendentes
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Documents Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {/* Absent Documents */}
@@ -484,11 +657,6 @@ export const Documents: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* Mobile Bottom Indicator */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 lg:hidden">
-        <div className="w-32 h-1 bg-black rounded-full"></div>
-      </div>
     </div>
   );
 };
