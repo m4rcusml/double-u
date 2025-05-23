@@ -16,7 +16,7 @@ export function Dashboard() {
             <h1 className="text-xl font-semibold">Dashboard</h1>
             <button
               onClick={navigateToHolding}
-              className="text-teal-700 hover:text-teal-800 font-medium"
+              className="cursor-pointer text-teal-700 hover:text-teal-800 font-medium"
             >
               Ir para Holding
             </button>
