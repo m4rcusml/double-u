@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
