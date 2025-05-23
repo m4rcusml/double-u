@@ -19,7 +19,7 @@ import { Toaster } from './components/ui/sonner'
 import { Settings } from './pages/settings'
 import { Properties } from './pages/properties'
 import { Documents } from './pages/documents'
-import { MyJourney } from './pages/my-jorney'
+import { MyJourney } from './pages/my-journey'
 import { Dashboard } from './pages/dashboard'
 
 export function RequireAuth({ children }: any) {
