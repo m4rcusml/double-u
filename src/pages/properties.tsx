@@ -236,8 +236,8 @@ export const Properties: React.FC = () => {
       <div className='p-4'>
         {/* Seus imóveis section */}
         <div className='mb-6'>
-          <h2 className='text-xl font-semibold text-gray-900 mb-1'>
-            Seus imóveis <span className='text-sm font-normal text-gray-500'>(DESTAQUES)</span>
+          <h2 className='text-4xl font-bold text-gray-900 mb-1'>
+            Seus imóveis <span className='text-xl text-md font-normal text-gray-500'>(DESTAQUES)</span>
           </h2>
 
           {loading ? (

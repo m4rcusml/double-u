@@ -10,10 +10,10 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-4xl w-full mx-auto px-4 py-8">
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold">Dashboard</h1>
+            <h1 className="text-4xl font-bold">Dashboard</h1>
             <button
               onClick={navigateToHolding}
               className="cursor-pointer text-teal-700 hover:text-teal-800 font-medium"
