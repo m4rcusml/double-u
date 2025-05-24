@@ -27,7 +27,7 @@ const Landing = () => {
             subtitle={<>Solicite agora sua <span className="text-emerald-500 font-medium">simulação gratuita</span> e descubra como a W1 pode ajudar você a economizar, crescer e proteger o seu patrimônio.</>}
             buttonText="Começar agora"
             buttonVariant="light"
-            redirect="/auth/first-access"
+            redirect="/not-logged/simulations"
           />
         </Suspense>
       </main>
